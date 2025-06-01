@@ -44,7 +44,6 @@ public:
         return cnt;
     }
     int reversePairs(vector<int>& nums) {
-        int ans = mergesort(nums,0,nums.size()-1);
-        return ans;
+        return mergesort(nums,0,nums.size()-1);
     }
 };
