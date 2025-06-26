@@ -11,19 +11,13 @@
  */
 class Solution {
 public:
-    bool isSymmetric(TreeNode* root) {
-        if(!root){
-            return true;
+    bool symmetricutil(TreeNode* root1,TreeNode* root2){
+        if(root1==NULL || root2==NULL){
+            return root1==root2;
         }
-        return isMirror(root->left,root->right);
+        return (root1->val==root2->val) && symmetricutil(root1->left,root2->right) && symmetricutil(root1->right,root2->left);
     }
-    bool isMirror(TreeNode *t,TreeNode *q){
-        if(!t&&!q){
-            return true;
-        }
-        if(!t||!q||t->val!=q->val){
-            return false;
-        }
-        return isMirror(t->left,q->right)&&isMirror(t->right,q->left);
+    bool isSymmetric(TreeNode* root) {
+        return symmetricutil(root->left,root->right);
     }
 };
