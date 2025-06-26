@@ -30,14 +30,12 @@ public:
             }
         }
         vector<vector<int>>ans;
-        for(auto col:nodes){
-            vector<int>cols;
-            for(auto rows:col.second){
-                for(auto val:rows.second){
-                    cols.push_back(val);
-                }
+        for(auto p:nodes){
+            vector<int>col;
+            for(auto qw:p.second){
+                col.insert(col.end(),qw.second.begin(),qw.second.end());
             }
-            ans.push_back(cols);
+            ans.push_back(col);
         }
         return ans;
     }
