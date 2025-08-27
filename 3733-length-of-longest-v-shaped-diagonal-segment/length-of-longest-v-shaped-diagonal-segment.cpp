@@ -1,9 +1,11 @@
 class Solution {
 public:
     vector<vector<int>>directions = {{1,1},{1,-1},{-1,-1},{-1,1}};
+    int dp[501][501][4][2];
     int lenOfVDiagonal(vector<vector<int>>& grid) {
         int m = grid.size();
         int n = grid[0].size();
+        memset(dp,-1,sizeof(dp));
 
         int result=0;
         for(int i=0;i<m;i++){
@@ -24,6 +26,8 @@ public:
 
         if(i_<0 || i_>=m || j_<0 || j_>=n || grid[i_][j_]!=val)return 0;
 
+        if(dp[i_][j_][d][canTurn]!=-1)return dp[i_][j_][d][canTurn];
+
         int result=0;
         int keepMoving = 1 + solve(i_,j_,d,canTurn,val==2?0:2,grid,m,n);
         result = max(result,keepMoving);
@@ -32,6 +36,6 @@ public:
             result = max(result,turnAndFind);
         }
 
-        return result;
+        return dp[i_][j_][d][canTurn] = result;
     }
 };
