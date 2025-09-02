@@ -1,12 +1,10 @@
 class Solution {
 public:
     vector<vector<int>> updateMatrix(vector<vector<int>>& mat) {
-        int n=mat.size();
-        int m=mat[0].size();
-        vector<vector<int>>dis(n,vector<int>(m,0));
-        vector<vector<int>>vis(n,vector<int>(m,0));
+        int n = mat.size();
+        int m = mat[0].size();
         queue<pair<pair<int,int>,int>>q;
-        // finding 0 with 1s
+        vector<vector<int>>vis(n,vector<int>(m,0));
         for(int i=0;i<n;i++){
             for(int j=0;j<m;j++){
                 if(mat[i][j]==0){
@@ -15,20 +13,22 @@ public:
                 }
             }
         }
-        int delrow[] = {-1,1,0,0};
-        int delcol[] = {0,0,-1,1};
+        vector<vector<int>>dis(n,vector<int>(m));
+        int dirx[] = {0,0,1,-1};
+        int diry[] = {1,-1,0,0};
         while(!q.empty()){
-            int row = q.front().first.first;
-            int col = q.front().first.second;
-            int step = q.front().second;
-            dis[row][col]=step;
+            auto temp = q.front();
             q.pop();
+            int x = temp.first.first;
+            int y = temp.first.second;
+            int step = temp.second;
+            dis[x][y] = step;
             for(int i=0;i<4;i++){
-                int nrow = row + delrow[i];
-                int ncol = col + delcol[i];
-                if(nrow>=0 && nrow<n && ncol>=0 && ncol<m && !vis[nrow][ncol]){
-                    q.push({{nrow,ncol},step+1});
-                    vis[nrow][ncol]=1;
+                int nx = x + dirx[i];
+                int ny = y + diry[i];
+                if(nx>=0 && nx<n && ny>=0 && ny<m && !vis[nx][ny]){
+                    q.push({{nx,ny},step+1});
+                    vis[nx][ny]=1;
                 }
             }
         }
