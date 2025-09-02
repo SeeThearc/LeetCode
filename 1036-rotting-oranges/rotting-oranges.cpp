@@ -1,44 +1,46 @@
 class Solution {
 public:
     int orangesRotting(vector<vector<int>>& grid) {
-        if(grid.empty())return 0;
+        int m =grid.size();
+        int n = grid[0].size();
         queue<pair<int,int>>q;
-        int tot=0;
-        int n=grid.size();
-        int m=grid[0].size();
-        for(int i=0;i<n;i++){
-            for(int j=0;j<m;j++){
-                if(grid[i][j]!=0)tot++;
-                if(grid[i][j]==2)q.push({i,j});
+        int c=0;
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                if(grid[i][j]==2){
+                    q.push({i,j});
+                }
+                if(grid[i][j]!=0)c++;
             }
         }
-        int minutes=0;
-        int cnt=0;
-        int dx[]={1,-1,0,0};
-        int dy[]={0,0,1,-1};
+        int ans=0;
+        int dirx[] = {0,0,1,-1};
+        int diry[] = {1,-1,0,0};
+        int cf=0;
         while(!q.empty()){
-            int k=q.size();
-            cnt+=k;
-            for(int i=0;i<k;i++){
-                int x = q.front().first;
-                int y = q.front().second;
+            bool found=false;
+            int s = q.size();
+            cf+=s;
+            for(int j=0;j<s;j++){
+                auto temp = q.front();
+                int x = temp.first;
+                int y = temp.second;
                 q.pop();
-                for(int j=0;j<4;j++){
-                    int nx=x+dx[j];
-                    int ny=y+dy[j];
-                    if(nx>=0 && nx<n && ny>=0 && ny<m && grid[nx][ny]==1){
-                        q.push({nx,ny});
+                for(int i=0;i<4;i++){
+                    int nx = x+dirx[i];
+                    int ny = y+diry[i];
+                    if(nx>=0 && nx<m && ny>=0 && ny<n && grid[nx][ny]==1){
+                        found=true;
                         grid[nx][ny]=2;
+                        q.push({nx,ny});
                     }
                 }
             }
-            if(!q.empty())minutes++;
+            if(found)ans++;
+            found=false;
         }
-        if(cnt==tot){
-            return minutes;
-        }
-        else{
-            return -1;
-        }
+        int fin;
+        if(c==cf?fin=ans:fin=-1);
+        return fin;
     }
 };
