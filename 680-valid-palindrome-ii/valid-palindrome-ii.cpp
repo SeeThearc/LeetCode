@@ -9,15 +9,15 @@ public:
         return true;
     }
     bool validPalindrome(string s) {
-        stringstream ss(s);
-        char c;
-        vector<char>lett;
-        while(ss >> c){
-            lett.push_back(c);
-        }
-        int left=0,right=lett.size()-1;
+        // stringstream ss(s);
+        // char c;
+        // vector<char>lett;
+        // while(ss >> c){
+        //     lett.push_back(c);
+        // }
+        int left=0,right=s.size()-1;
         while(left<right){
-            if(lett[left]==lett[right]){
+            if(s[left]==s[right]){
                 left++;
                 right--;
             }
