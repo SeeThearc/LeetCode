@@ -1,9 +1,13 @@
 class Solution {
 public:
     bool isVowel(char c){
-        int ans = string("AEIOUaeiou").find(c);
-        if(ans>=0)return true;
-        return false;
+        switch (c) {
+            case 'A': case 'E': case 'I': case 'O': case 'U':
+            case 'a': case 'e': case 'i': case 'o': case 'u':
+                return true;
+            default:
+                return false;
+        }
     }
     string sortVowels(string s) {
         vector<char>vowel;
