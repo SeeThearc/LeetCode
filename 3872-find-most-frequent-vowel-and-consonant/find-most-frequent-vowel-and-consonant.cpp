@@ -7,7 +7,7 @@ public:
     }
     int maxFreqSum(string s) {
         map<char,int>mpp;
-        int maxv=-1,maxc=-1;
+        int maxv=0,maxc=0;
         for(char &c:s){
             mpp[c]++;
             if(isVowel(c)){
@@ -17,9 +17,6 @@ public:
                 maxc = max(maxc,mpp[c]);
             }
         }
-        if(maxv!=-1 && maxc!=-1)return maxv+maxc;
-        else if(maxv!=-1)return maxv;
-        else if(maxc!=-1)return maxc;
-        else return -1;
+        return maxc+maxv;
     }
 };
