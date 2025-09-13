@@ -7,8 +7,8 @@ public:
             mpp[c]++;
         }
         for(char c:t){
-            if(mpp[c]<=0)return false;
-            mpp[c]--;
+            if(mpp[c]==0)return false;
+            else mpp[c]--;
         }
         return true;
     }
