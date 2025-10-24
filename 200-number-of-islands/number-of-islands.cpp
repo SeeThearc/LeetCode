@@ -1,39 +1,31 @@
 class Solution {
 public:
-    void bfs(vector<vector<char>>&grid,vector<vector<int>>&vis,int i,int j,int m,int n){
-        int dirx[] = {0,0,1,-1};
-        int diry[] = {1,-1,0,0};
-        queue<pair<int,int>>q;
-        q.push({i,j});
-        vis[i][j]=1;
-        while(!q.empty()){
-            auto it = q.front();
-            q.pop();
-            int x = it.first;
-            int y = it.second;
-            for(int k=0;k<4;k++){
-                int nx = x + dirx[k];
-                int ny = y + diry[k];
-                if(nx>=0 && nx<m && ny>=0 && ny<n && grid[nx][ny]=='1' && !vis[nx][ny]){
-                    q.push({nx,ny});
-                    vis[nx][ny]=1;
-                }
+    void dfs(int x,int y,vector<vector<int>>&vis,vector<vector<char>>&grid,vector<pair<int,int>>&dir,int m,int n){
+        vis[x][y]=1;
+        for(auto [dx,dy]:dir){
+            int nx = x + dx;
+            int ny = y + dy;
+            if(nx>=0 && nx<m && ny>=0 && ny<n && !vis[nx][ny] && grid[nx][ny]=='1'){
+                dfs(nx,ny,vis,grid,dir,m,n);
             }
         }
     }
     int numIslands(vector<vector<char>>& grid) {
-
-        int m=grid.size(),n=grid[0].size();
+        int m = grid.size();
+        int n = grid[0].size();
+        int isl=0;
         vector<vector<int>>vis(m,vector<int>(n,0));
-        int c=0;
+        vector<pair<int,int>>dir = {
+            {1,0},{-1,0},{0,1},{0,-1}
+        };
         for(int i=0;i<m;i++){
             for(int j=0;j<n;j++){
                 if(grid[i][j]=='1' && !vis[i][j]){
-                    bfs(grid,vis,i,j,m,n);
-                    c++;
+                    dfs(i,j,vis,grid,dir,m,n);
+                    isl++;
                 }
             }
         }
-        return c;
+        return isl;
     }
 };
