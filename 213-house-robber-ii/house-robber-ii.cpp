@@ -1,38 +1,34 @@
 class Solution {
 public:
-    int solve(vector<int>nums){
-        int n=nums.size();
-        if(n==0)return 0;
-        if(n==1)return nums[0];
-        vector<int>dp(n,-1);
-        dp[0]=nums[0];
-        for(int i=1;i<n;i++){
-            int pick=0,notpick=0;
-            pick+=nums[i];
-            if(i>1){
-                pick+=dp[i-2];
-            }
-            notpick+=dp[i-1];
-            dp[i]=max(pick,notpick);
-        }
-        return dp[n-1];
+    int helper(int n,vector<int>&dp,vector<int>&nums){
+        if(n==0)return nums[0];
+        if(n==1)return max(nums[0],nums[1]);
+        if(dp[n]!=-1)return dp[n];
+        int back1 = helper(n-1,dp,nums);
+        int back2 = nums[n]+helper(n-2,dp,nums);
+        return dp[n] = max(back1,back2);
     }
     int rob(vector<int>& nums) {
-        int n=nums.size();
+        int n = nums.size();
         if(n==1)return nums[0];
-        if(n==0)return 0;
-        vector<int>arr1;
-        vector<int>arr2;
+        if(n==2)return max(nums[0],nums[1]);
+        vector<int>dp1(n,-1);
+        vector<int>dp2(n,-1);
+        vector<int>arr1,arr2;
         for(int i=0;i<n;i++){
-            if(i!=0){
+            if(i==0){
                 arr1.push_back(nums[i]);
+                continue;
             }
-            if(i!=n-1){
+            if(i==n-1){
                 arr2.push_back(nums[i]);
+                continue;
             }
+            arr1.push_back(nums[i]);
+            arr2.push_back(nums[i]);
         }
-        int ans1=solve(arr1);
-        int ans2=solve(arr2);
-        return(max(ans1,ans2));
+        int a = helper(arr1.size()-1,dp1,arr1);
+        int b = helper(arr2.size()-1,dp2,arr2);
+        return max(a,b);
     }
 };
