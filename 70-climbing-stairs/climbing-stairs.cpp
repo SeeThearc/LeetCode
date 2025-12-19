@@ -1,16 +1,15 @@
 class Solution {
 public:
-    int find(vector<int>&dp,int i){
-        if(i==0 || i==1)return 1;
-        if(dp[i]!=-1)return dp[i];
-        dp[i] = find(dp,i-1)+find(dp,i-2);
-        return dp[i];
+    int helper(int n,vector<int>&dp){
+        if(n<1)return 0;
+        if(dp[n]!=-1)return dp[n];
+        if(n==1)return 1;
+        if(n==2)return 2;
+        dp[n] = helper(n-1,dp) + helper(n-2,dp);
+        return dp[n];
     }
     int climbStairs(int n) {
-        if(n==0)return 0;
-        if(n==1)return 1;
         vector<int>dp(n+1,-1);
-        find(dp,n);
-        return dp[n];
+        return helper(n,dp);
     }
 };
