@@ -1,22 +1,11 @@
 class Solution {
 public:
     int singleNumber(vector<int>& nums) {
-        sort(nums.begin(),nums.end());
-        int n=nums.size();
-        if(n==1){
-            return nums[0];
+        int n = nums.size();
+        int ans=0;
+        for(int i=0;i<n;i++){
+            ans^=nums[i];
         }
-        int currnum;
-        int i=0;
-        while(i!=n-1){
-            if(nums[i]==nums[i+1]){
-                i=i+2;
-            }
-            else{
-                currnum=nums[i];
-                break;
-            }
-        }
-        return currnum;
+        return ans;
     }
 };
