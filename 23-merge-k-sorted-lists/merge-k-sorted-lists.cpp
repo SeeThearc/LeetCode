@@ -17,20 +17,26 @@ public:
     };
     ListNode* mergeKLists(vector<ListNode*>& lists) {
         priority_queue<ListNode*,vector<ListNode*>,compare>pq;
-        ListNode* root = new ListNode();
-        ListNode* tail = root;
-        for(auto list:lists){
-            if(list){
-                pq.push(list);
+        for(auto l:lists){
+            if(l){
+                pq.push(l);
             }
         }
+        ListNode* head = NULL;
+        ListNode* tail=head;
         while(!pq.empty()){
             ListNode* temp = pq.top();
             pq.pop();
-            tail->next = temp;
-            tail=temp;
+            if(head==NULL){
+                head=temp;
+                tail=head;
+            }
+            else{
+                tail->next=temp;
+                tail=tail->next;
+            }
             if(temp->next)pq.push(temp->next);
         }
-        return root->next;
+        return head;
     }
 };
