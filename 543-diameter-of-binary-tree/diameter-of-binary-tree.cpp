@@ -11,16 +11,17 @@
  */
 class Solution {
 public:
-    int diameter=0;
-    int calcheight(TreeNode* root){
-        if(!root) return 0;
-        int ml=calcheight(root->left);
-        int mr=calcheight(root->right);
-        diameter=max(diameter,ml+mr);
-        return 1 + max(ml,mr);
+    int dia=0;
+    int height(TreeNode* root){
+        if(!root)return 0;
+        int rl = height(root->left);
+        int rr = height(root->right);
+        dia = max(dia,rl+rr);
+        return 1+max(rl,rr);
     }
     int diameterOfBinaryTree(TreeNode* root) {
-        calcheight(root);
-        return diameter;
+        if(!root) return 0;
+        height(root);
+        return dia;
     }
 };
