@@ -12,33 +12,33 @@
 class Solution {
 public:
     vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
+        if(!root)return {};
         queue<TreeNode*>q;
-        bool zig=true;
-        vector<vector<int>>ans;
-        if(!root)return ans;
         q.push(root);
+        vector<vector<int>>ans;
+        bool level=true;
         while(!q.empty()){
-            int size=q.size();
-            vector<int>level;
-            for(int i=0;i<size;i++){
-                TreeNode* temp=q.front();
+            vector<int>lev;
+            int s=q.size();
+            for(int i=0;i<s;i++){
+                auto node = q.front();
                 q.pop();
-                level.push_back(temp->val);
-                if(temp->left){
-                    q.push(temp->left);
+                lev.push_back(node->val);
+                if(node->left){
+                    q.push(node->left);
                 }
-                if(temp->right){
-                    q.push(temp->right);
+                if(node->right){
+                    q.push(node->right);
                 }
-            }            
-            if(zig){
-                ans.push_back(level);
-                zig=false;
+            }
+            if(level){
+                ans.push_back(lev);
+                level=!level;
             }
             else{
-                reverse(level.begin(),level.end());
-                ans.push_back(level);
-                zig=true;
+                reverse(lev.begin(),lev.end());
+                ans.push_back(lev);
+                level=!level;
             }
         }
         return ans;
