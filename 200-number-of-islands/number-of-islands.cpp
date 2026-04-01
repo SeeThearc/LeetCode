@@ -1,28 +1,36 @@
 class Solution {
 public:
-    void dfs(int x,int y,vector<vector<int>>&vis,vector<vector<char>>&grid,vector<pair<int,int>>&dir,int m,int n){
-        vis[x][y]=1;
-        for(auto [dx,dy]:dir){
-            int nx = x + dx;
-            int ny = y + dy;
-            if(nx>=0 && nx<m && ny>=0 && ny<n && !vis[nx][ny] && grid[nx][ny]=='1'){
-                dfs(nx,ny,vis,grid,dir,m,n);
+    void bfs(int i,int j,vector<vector<int>>&vis,vector<vector<char>>&grid,vector<pair<int,int>>&dir){
+        int m =grid.size();
+        int n = grid[0].size();
+        queue<pair<int,int>>q;
+        q.push({i,j});
+        while(!q.empty()){
+            auto it = q.front();
+            q.pop();
+            int x = it.first;
+            int y = it.second;
+            for(int i=0;i<4;i++){
+                int nx = x + dir[i].first;
+                int ny = y + dir[i].second;
+                if(nx>=0 && nx<m && ny>=0 && ny<n && !vis[nx][ny] && grid[nx][ny]=='1'){
+                    vis[nx][ny]=1;
+                    q.push({nx,ny});
+                }
             }
         }
     }
     int numIslands(vector<vector<char>>& grid) {
         int m = grid.size();
         int n = grid[0].size();
-        int isl=0;
         vector<vector<int>>vis(m,vector<int>(n,0));
-        vector<pair<int,int>>dir = {
-            {1,0},{-1,0},{0,1},{0,-1}
-        };
+        int isl = 0;
+        vector<pair<int,int>>dir = {{0,1},{1,0},{-1,0},{0,-1}};
         for(int i=0;i<m;i++){
             for(int j=0;j<n;j++){
-                if(grid[i][j]=='1' && !vis[i][j]){
-                    dfs(i,j,vis,grid,dir,m,n);
+                if(!vis[i][j] && grid[i][j]=='1'){
                     isl++;
+                    bfs(i,j,vis,grid,dir);
                 }
             }
         }
