@@ -1,18 +1,17 @@
 class Solution {
 public:
-    int helper(int n,vector<int>&dp,vector<int>&nums){
-        if(n==0)return nums[0];
-        if(n==1)return max(nums[1],nums[0]);
-        if(dp[n]!=-1)return dp[n];
-        int back2 = nums[n] + helper(n-2,dp,nums);
-        int back1 = helper(n-1,dp,nums);
-        dp[n] = max(back2,back1);
-        return dp[n];
+    int solve(int i,vector<int>&nums,vector<int>&dp){
+        if(i<0)return 0;
+        if(i==0)return dp[i] = nums[0];
+        if(dp[i]!=-1)return dp[i];
+        int pick = nums[i] + solve(i-2,nums,dp);
+        int notpick = solve(i-1,nums,dp);
+        return dp[i] = max(pick,notpick);
     }
     int rob(vector<int>& nums) {
         int n = nums.size();
-        if(n==1)return nums[0];
-        vector<int>dp(n,-1);
-        return helper(n-1,dp,nums);
+        vector<int>dp(n+1,-1);
+        solve(n-1,nums,dp);
+        return dp[n-1];
     }
 };
