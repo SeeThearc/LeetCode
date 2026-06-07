@@ -1,32 +1,27 @@
 class Solution {
 public:
+    bool find(int ind,int target,vector<int>&nums,vector<vector<int>>&dp){
+        if(target==0)return true;
+        if(target<0)return false;
+        if(ind==0)return nums[0]==target;
+        if(dp[ind][target]!=-1)return dp[ind][target];
+        bool pick = find(ind-1,target-nums[ind],nums,dp);
+        bool notpick = find(ind-1,target,nums,dp);
+        return dp[ind][target] = pick||notpick;
+    }
     bool canPartition(vector<int>& nums) {
-        int n=nums.size();
-        int sum=0;
-        for(int i=0;i<n;i++){
-            sum+=nums[i];
+        int n = nums.size();
+        int total=0;
+        for(int x:nums){
+            total+=x;
         }
-        if(sum%2==1){
+        if(total%2==1){
             return false;
         }
-        int k=sum/2;
-        vector<vector<int>>dp(n,vector<int>(k+1,false));
-        for(int i=0;i<n;i++){
-            dp[i][0]=true;
+        else{
+            int target = total/2;
+            vector<vector<int>>dp(n+1,vector<int>(target+1,-1));
+            return find(n-1,target,nums,dp);
         }
-        if(nums[0]<=k){
-            dp[0][nums[0]]=true;
-        }
-        for(int ind=1;ind<n;ind++){
-            for(int tar=1;tar<=k;tar++){
-                bool notTaken = dp[ind-1][tar];
-                bool taken = false;
-                if(nums[ind]<=tar){
-                    taken = dp[ind-1][tar-nums[ind]];
-                }
-                dp[ind][tar] = notTaken || taken;
-            }
-        }
-        return dp[n-1][k];
     }
 };
