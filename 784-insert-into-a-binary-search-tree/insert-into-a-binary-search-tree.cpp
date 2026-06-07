@@ -13,13 +13,13 @@ class Solution {
 public:
     TreeNode* insertIntoBST(TreeNode* root, int val) {
         if(root==NULL){
-            root = new TreeNode(val);
-            return root;
+            TreeNode *newnode = new TreeNode(val);
+            return newnode;
         }
-        if(val<root->val){
+        else if(val<root->val){
             root->left = insertIntoBST(root->left,val);
         }
-        if(val>root->val){
+        else{
             root->right = insertIntoBST(root->right,val);
         }
         return root;
