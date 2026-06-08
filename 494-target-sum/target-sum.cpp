@@ -1,39 +1,25 @@
 class Solution {
 public:
-    int findTargetSumWays(vector<int>& nums, int targ) {
-        int n=nums.size();
-        int sum = 0;
-        for(int i=0;i<n;i++){
-            sum+=nums[i];
-        }
-        if(sum-abs(targ) < 0 || (sum-targ)%2!=0){
+    int find(int ind,int tar,vector<int>&nums,vector<vector<int>>&dp){
+        if(tar<0)return 0;
+        if(ind==0){
+            if(tar==0 && nums[ind]==0)return 2;
+            if(tar==0 || nums[ind]==tar)return 1;
             return 0;
         }
-        // sum p - sum n == targ
-        // sum p + sum n == sum
-        // so 2*sum p = targ + sum
-        int target = (sum+targ)/2;
-        int mod = 1e9 + 7;
-        vector<vector<int>>dp(n,vector<int>(target+1,0));
-        if(nums[0]==0){
-            dp[0][0]=2;
-        }
-        else{
-            dp[0][0]=1;
-        }
-        if(nums[0]!=0 && nums[0]<=target){
-            dp[0][nums[0]]=1;
-        }
-        for(int ind=1;ind<n;ind++){
-            for(int tar=0;tar<=target;tar++){
-                int notTaken = dp[ind-1][tar];
-                int taken = 0;
-                if(nums[ind]<=tar){
-                    taken = dp[ind-1][tar-nums[ind]];
-                }
-                dp[ind][tar] = (notTaken + taken)%mod ; 
-            }
-        }
-        return dp[n-1][target];
+        if(dp[ind][tar]!=-1)return dp[ind][tar];
+        int notpick = find(ind-1,tar,nums,dp);
+        int pick = find(ind-1,tar-nums[ind],nums,dp);
+        return dp[ind][tar] = pick+notpick;
+    }
+    int findTargetSumWays(vector<int>& nums, int target) {
+        int n = nums.size();
+        int total=0;
+        for(int x:nums)total+=x;
+        vector<vector<int>>dp(n,vector<int>(total+1,-1));
+        if(abs(target)>total)return 0;
+        if((total-target)%2==1)return 0;
+        int tar = (total-target)/2;
+        return find(n-1,tar,nums,dp);
     }
 };
