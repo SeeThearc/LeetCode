@@ -2,23 +2,23 @@ class Solution {
 public:
     long long sumAndMultiply(int n) {
         long long ans=0;
-        int sum=0;
-        vector<int>dig;
+        long long sum=0;
         while(n>0){
-            int d = n%10;
-            if(d==0){
-                n/=10;
-                continue;
+            int dig = n%10;
+            if(dig!=0){
+                ans*=10;
+                ans+=dig;
+                sum+=dig;
             }
-            dig.push_back(d);
-            sum+=d;
             n/=10;
         }
-        reverse(dig.begin(),dig.end());
-        for(int x:dig){
-            ans = (ans*10)+x;
+        long long rev=0;
+        while (ans > 0) {
+            int digit = ans % 10;    
+            rev = rev * 10 + digit; 
+            ans /= 10;                 
         }
-        ans*=sum;
-        return ans;
+
+        return rev*sum;
     }
 };
