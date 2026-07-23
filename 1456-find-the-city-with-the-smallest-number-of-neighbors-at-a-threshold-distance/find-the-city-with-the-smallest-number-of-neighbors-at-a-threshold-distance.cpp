@@ -8,6 +8,7 @@ public:
         while(!pq.empty()){
             auto [we,node] = pq.top();
             pq.pop();
+            if(we>dist[node])continue;
             if(we>thresh)continue;
             for(int i=0;i<(int)adjlis[node].size();i++){
                 int v = adjlis[node][i].first;
