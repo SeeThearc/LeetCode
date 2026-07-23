@@ -9,7 +9,7 @@ public:
             auto [we,node] = pq.top();
             pq.pop();
             if(we>dist[node])continue;
-            if(we>thresh)continue;
+            if(we>thresh)break;
             for(int i=0;i<(int)adjlis[node].size();i++){
                 int v = adjlis[node][i].first;
                 int w = adjlis[node][i].second;
