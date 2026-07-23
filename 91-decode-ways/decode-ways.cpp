@@ -5,7 +5,7 @@ public:
         if(dp[i]!=-1)return dp[i];
         int goone=0,gotwo=0;
         if(s[i]=='0'){
-            find(i+1,s,dp,n);
+            return 0;
         }
         else{
             goone = find(i+1,s,dp,n);
