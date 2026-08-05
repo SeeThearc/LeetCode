@@ -5,7 +5,7 @@ public:
         for(int i=0;i<(int)invocations.size();i++){
             adjlis[invocations[i][0]].push_back(invocations[i][1]);
         }
-        map<int,int>mpp;
+        //map<int,int>mpp;
         vector<int>vis(n,0);
         queue<int>q;
         vis[k]=1;
@@ -13,7 +13,7 @@ public:
         while(!q.empty()){
             auto node = q.front();
             q.pop();
-            mpp[node]=1;
+            //mpp[node]=1;
             for(int i=0;i<(int)adjlis[node].size();i++){
                 if(!vis[adjlis[node][i]]){
                     vis[adjlis[node][i]]=1;
