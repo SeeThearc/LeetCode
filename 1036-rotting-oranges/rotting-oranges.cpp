@@ -4,40 +4,45 @@ public:
         int m = grid.size();
         int n = grid[0].size();
         queue<pair<int,int>>q;
-        int dirx[] = {0,0,1,-1};
-        int diry[] = {1,-1,0,0};
-        int total=0;
+        vector<pair<int,int>>dir = {{1,0},{0,1},{-1,0},{0,-1}};
+        if(n==1 && m==1 && grid[0][0]==1)return -1;
+        if(n==1 && m==1)return 0;
+        int r=0;
         for(int i=0;i<m;i++){
             for(int j=0;j<n;j++){
                 if(grid[i][j]==2){
                     q.push({i,j});
                 }
-                if(grid[i][j]!=0)total++;
+                if(grid[i][j]==1)r++;
             }
         }
-        if(total==0)return 0;
-        int rot=0;
-        int min=-1;
+        int min=0,c=0;
+        bool found=false;
         while(!q.empty()){
-            int size = q.size();
-            rot+=size;
-            min++;
-            for(int i=0;i<size;i++){
+            int s = q.size();
+            for(int i=0;i<s;i++){
                 int x = q.front().first;
                 int y = q.front().second;
                 q.pop();
-                for(int k=0;k<4;k++){
-                    int nx = x + dirx[k];
-                    int ny = y + diry[k];
+                for(int j=0;j<4;j++){
+                    int nx = x + dir[j].first;
+                    int ny = y + dir[j].second;
                     if(nx>=0 && nx<m && ny>=0 && ny<n && grid[nx][ny]==1){
                         grid[nx][ny]=2;
                         q.push({nx,ny});
+                        c++;
+                        found=true;
                     }
                 }
             }
+            if(found){
+                min++;
+                found=false;
+            }
         }
-        int ans=-1;
-        if(rot==total?ans=min:ans=-1);
-        return ans;
+        //cout<<min;
+        cout<<c<<" "<<r;
+        if(c==r)return min;
+        return -1;
     }
 };
