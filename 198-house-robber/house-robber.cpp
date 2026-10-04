@@ -1,13 +1,15 @@
 class Solution {
 public:
+    int find(vector<int>&nums,vector<int>&dp,int i,int n){
+        if(i>=n)return 0;
+        if(dp[i]!=-1)return dp[i];
+        int rob = nums[i] + find(nums,dp,i+2,n);
+        int norob = find(nums,dp,i+1,n);
+        return dp[i] = max(rob,norob); 
+    }
     int rob(vector<int>& nums) {
-        int prev1=0,prev2=0;
         int n = nums.size();
-        for(int i=0;i<n;i++){
-            int curr = max(prev2+nums[i],prev1);
-            prev2=prev1;
-            prev1=curr;
-        }
-        return prev1;
+        vector<int>dp(n+1,-1);
+        return find(nums,dp,0,n);
     }
 };
