@@ -9,8 +9,8 @@ public:
             while(!st.empty() && curr<heights[st.top()]){
                 int height = heights[st.top()];
                 st.pop();
-                int width = st.empty()?i:i-st.top()-1;
-                maxarea=max(maxarea,height*width);
+                int width = (st.empty())?i:i-st.top()-1;
+                maxarea = max(maxarea,height*width);
             }
             st.push(i);
         }
