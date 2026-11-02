@@ -4,7 +4,6 @@ public:
         int n = fruits.size();
         map<int,int>mp;
         int ans=0;
-        int count=0;
         int left=0;
         for(int i=0;i<n;i++){
             mp[fruits[i]]++;
